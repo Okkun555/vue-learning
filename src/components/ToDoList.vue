@@ -19,13 +19,18 @@
   <transition name="fade">
     <div v-if="show">Awesome Transition</div>
   </transition>
+
+  <div class="counter-container">
+    <counter />
+  </div>
 </template>
 
 <script>
 import ToDoItem from "./ToDoItem.vue";
+import Counter from "./Counter.vue";
 
 export default {
-  components: { ToDoItem },
+  components: { ToDoItem, Counter },
   data() {
     return {
       inputValue: "",
@@ -76,5 +81,9 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.counter-container {
+  margin-top: 32px;
 }
 </style>
