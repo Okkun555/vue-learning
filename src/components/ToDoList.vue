@@ -5,21 +5,27 @@
     <input v-model="filterValue" placeholder="フィルタテキスト" />
   </div>
   <ul>
-    <li
+    <ToDoItem
       v-for="todo in filteredTodoItems"
-      v-bind:key="todo.id"
-      class="todo-item"
-      :class="{ done: todo.done }"
-      @click="todo.done = !todo.done"
+      :key="todo.id"
+      :done="todo.done"
+      v-on:toggle="todo.done = !todo.done"
     >
-      <span v-if="todo.done">✔︎</span>
-      {{ todo.text }}
-    </li>
+      <b>{{ todo.text }}</b>
+    </ToDoItem>
   </ul>
+
+  <button @click="show = !show">表示切り替え</button>
+  <transition name="fade">
+    <div v-if="show">Awesome Transition</div>
+  </transition>
 </template>
 
 <script>
+import ToDoItem from "./ToDoItem.vue";
+
 export default {
+  components: { ToDoItem },
   data() {
     return {
       inputValue: "",
@@ -28,6 +34,7 @@ export default {
         { id: 1, text: "海に行く", done: false },
         { id: 2, text: "山に行く", done: false },
       ],
+      show: true,
     };
   },
   computed: {
@@ -59,5 +66,15 @@ export default {
 .todo-item.done {
   background-color: #3fb983;
   color: #ffffff;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1000ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
